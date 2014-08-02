@@ -22,8 +22,9 @@ However, when it comes to creating new software tools, Daemon/Service and Socket
 About Daemon
 ============
 
-Text below on features of a deamon is copied from [1].
+Text below on features of a deamon are copied from [1].
 
+<font color="#cccccc">
 A daemon is a program that runs in the background. A daemon will usually be started at system startup and end at system shutdown. The exceptions to this rule are programs like the Bluetooth SDP daemon, which is activated when a new Bluetooth HCI is found,, and ends when it is removed. Daemons run transparently and do not normally interact with the user directly.
 
 Daemons start as ordinary processes but they eventually ‘fork and die’ to start running in the background. Some daemons do only the ‘fork and die’ step but ignore other important steps. Here is a list of what a daemon should do:
@@ -34,11 +35,11 @@ Daemons start as ordinary processes but they eventually ‘fork and die’ to st
 - Create a new session id and detach from the current session.
 - Change the working directory to somewhere that won’t get unmounted.
 - Close STDIN, STDOUT and STDERR.
-
+</font>
 
 References
 ==========
-[1] <a href="http://www.danielhall.me/2010/01/writing-a-daemon-in-c/">Writing a daemon in C</a>
+[1] <a href="http://www.danielhall.me/2010/01/writing-a-daemon-in-c/">Writing a daemon in C</a>  
 [2] <a href="http://www.netzmafia.de/skripten/unix/linux-daemon-howto.html">Linux Daemon Writing HOWTO</a>
 
 
