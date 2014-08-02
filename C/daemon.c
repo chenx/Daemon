@@ -76,7 +76,7 @@ int main(int argc, char * argv[]) {
 // To see the output, type: tail -f /var/log/system.log
 //
 void do_log(const char * identity, const char * msg) {
-    static int ct = 0;
+    //static int ct = 0;
     //printf("%s %d\n", msg, ++ ct);
 
     /* Open a connection to the syslog server */

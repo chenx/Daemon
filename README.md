@@ -46,6 +46,7 @@ References
 ----------
 
 [1] <a href="http://www.danielhall.me/2010/01/writing-a-daemon-in-c/">Writing a daemon in C</a>  
-[2] <a href="http://www.netzmafia.de/skripten/unix/linux-daemon-howto.html">Linux Daemon Writing HOWTO</a>
+[2] <a href="http://www.netzmafia.de/skripten/unix/linux-daemon-howto.html">Linux Daemon Writing HOWTO</a>   
+[3] <a href="http://oldpapyrus.wordpress.com/2012/12/16/writing-linux-daemon-processes/">Writing Linux Daemon Processes</a>   
 
 
