@@ -24,18 +24,22 @@ About Daemon
 
 Text below on features of a deamon are copied from [1].
 
-<i><font color="#666666">
+<i>
 A daemon is a program that runs in the background. A daemon will usually be started at system startup and end at system shutdown. The exceptions to this rule are programs like the Bluetooth SDP daemon, which is activated when a new Bluetooth HCI is found,, and ends when it is removed. Daemons run transparently and do not normally interact with the user directly.
+</i>
 
+<i>
 Daemons start as ordinary processes but they eventually ‘fork and die’ to start running in the background. Some daemons do only the ‘fork and die’ step but ignore other important steps. Here is a list of what a daemon should do:
+</i>
 
+<i>
 - Fork to create a child, and exit the parent process.
 - Change the umask so that we aren’t relying on the one set in the parent.
 - Open logs to write to in the case of an error.
 - Create a new session id and detach from the current session.
 - Change the working directory to somewhere that won’t get unmounted.
 - Close STDIN, STDOUT and STDERR.
-</font></i>
+</i>
 
 
 References
