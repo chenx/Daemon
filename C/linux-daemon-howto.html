@@ -1,0 +1,584 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html><head>
+
+
+<!-- base href="http://www.linuxprofilm.com/articles/linux-daemon-howto.html" -->
+<!-- base href="http://www.netzmafia.de/skripten/unix/linux-daemon-howto.html" -->
+
+ <meta name="GENERATOR" content="LinuxDoc-Tools 0.9.20"><title>Linux Daemon Writing HOWTO</title></head>
+<body>
+<p><i>From: http://www.netzmafia.de/skripten/unix/linux-daemon-howto.html</i></p>
+<h1>Linux Daemon Writing HOWTO</h1>
+
+<h2>
+<a href="mailto:dmwatson@comcast.net">Devin Watson</a></h2>v1.0, May 2004
+<hr>
+<em>This document shows how to write a daemon in Linux using GCC. Knowledge
+of Linux and a familiarity with C are necessary to use this document.
+This HOWTO is Copyright by Devin Watson, under the terms of the BSD License.</em>
+<hr>
+<p>
+</p><h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc1">1.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#s1">Introduction: What is a Daemon?</a></h2>
+
+<p>
+</p><h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc2">2.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#s2">Getting Started</a></h2>
+
+<p>
+</p><h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc3">3.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#s3">Planning Your Daemon</a></h2>
+
+<ul>
+<li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc3.1">3.1</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss3.1">What Is It Going To Do?</a>
+</li><li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc3.2">3.2</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss3.2">How Much Interaction?</a>
+</li></ul>
+<p>
+</p><h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc4">4.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#s4">Basic Daemon Structure</a></h2>
+
+<ul>
+<li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc4.1">4.1</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss4.1">Forking The Parent Process</a>
+</li><li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc4.2">4.2</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss4.2">Changing The File Mode Mask (Umask)</a>
+</li><li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc4.3">4.3</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss4.3">Opening Logs For Writing</a>
+</li><li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc4.4">4.4</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss4.4">Creating a Unique Session ID (SID)</a>
+</li><li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc4.5">4.5</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss4.5">Changing The Working Directory</a>
+</li><li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc4.6">4.6</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss4.6">Closing Standard File Descriptors</a>
+</li></ul>
+<p>
+</p><h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc5">5.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#s5">Writing the Daemon Code</a></h2>
+
+<ul>
+<li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc5.1">5.1</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss5.1">Initialization</a>
+</li><li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc5.2">5.2</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss5.2">The Big Loop</a>
+</li></ul>
+<p>
+</p><h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc6">6.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#s6">Putting It All Together</a></h2>
+
+<ul>
+<li><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="toc6.1">6.1</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#ss6.1">Complete Sample</a>
+</li></ul>
+
+<hr>
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="s1">1.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc1">Introduction: What is a Daemon?</a></h2>
+
+<p>A daemon (or service) is a background process that is designed to run 
+autonomously,with little or not user intervention. The Apache web server http 
+daemon (httpd) is one such example of a daemon. It waits in the background 
+listening on specific ports, and serves up pages or processes scripts, based on 
+the type of request.</p>
+
+<p>Creating a daemon in Linux uses a specific set of rules in a given order. 
+Knowing how they work will help you understand how daemons operate in userland 
+Linux, but can operate with calls to the kernel also. In fact, a few daemons 
+interface with kernel modules that work with hardware devices, such as external 
+controller boards, printers,and PDAs. They are one of the fundamental building 
+blocks in Linux that give it incredible flexibility and power.</p>
+
+<p>Throughout this HOWTO, a very simple daemon will be built in C. As we go 
+along, more code will be added, showing the proper order of execution required 
+to get a daemon up and running.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="s2">2.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc2">Getting Started</a></h2>
+
+<p>First off, you'll need the following packages installed on your Linux machine 
+to develop daemons, specifically: </p>
+<p>
+</p><ul>
+<li><code>GCC 3.2.2 or higher</code></li>
+<li><code>Linux Development headers and libraries</code></li>
+</ul>
+<p></p>
+<p>If your system does not already have these installed (not likely, but check 
+anyway), you'll need them to develop the examples in this HOWTO. To find out 
+what version of GCC you have installed, use:</p>
+<p>
+</p><blockquote><code>
+</code><pre>        gcc --version
+</pre>
+</blockquote>
+<p></p>
+
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="s3">3.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc3">Planning Your Daemon</a></h2>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss3.1">3.1</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc3.1">What Is It Going To Do?</a>
+</h2>
+
+<p>A daemon should do one thing, and do it well. That one thing may be as 
+complex as managing hundreds of mailboxes on multiple domains, or as simple as 
+writing a report and calling sendmail to mail it out to an admin.</p>
+
+<p>In any case, you should have a good plan going in what the daemon should do. 
+If it is going to interoperate with some other daemons that you may or may not 
+be writing, this is something else to consider as well.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss3.2">3.2</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc3.2">How Much Interaction?</a>
+</h2>
+
+<p>Daemons should never have direct communication with a user through a 
+terminal. In fact, a daemon shouldn't communicate directly with a user at all. 
+All communication should pass through some sort of interface (which you may or 
+may not have to write), which can be as complex as a GTK+ GUI, or as simple as a 
+signal set.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="s4">4.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc4">Basic Daemon Structure</a></h2>
+
+<p>When a daemon starts up, it has to do some low-level housework to get itself
+ready for its real job. This involves a few steps:</p>
+<p>
+</p><ul>
+<li>Fork off the parent process</li>
+<li>Change file mode mask (umask)</li>
+<li>Open any logs for writing   </li>
+<li>Create a unique Session ID (SID)</li>
+<li>Change the current working directory to a safe place</li>
+<li>Close standard file descriptors</li>
+<li>Enter actual daemon code</li>
+</ul>
+<p></p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss4.1">4.1</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc4.1">Forking The Parent Process</a>
+</h2>
+
+<p>A daemon is started either by the system itself or a user in a terminal or 
+script. When it does start, the process is just like any other executable on the 
+system. To make it truly autonomous, a <i>child process</i> must be created 
+where the actual code is executed. This is known as forking, and it uses the 
+<em>fork()</em> function:
+</p><blockquote><code>
+</code><pre>        pid_t pid;
+
+        /* Fork off the parent process */       
+        pid = fork();
+        if (pid &lt; 0) {
+                exit(EXIT_FAILURE);
+        }
+        /* If we got a good PID, then
+           we can exit the parent process. */
+        if (pid &gt; 0) {
+                exit(EXIT_SUCCESS);
+        }
+</pre>
+</blockquote>
+<p></p>
+
+<p>Notice the error check right after the call to <em>fork()</em>. When writing 
+a daemon, you will have to code as defensively as possible. In fact, a good 
+percentage of the total code in a daemon consists of nothing but error 
+checking. </p>
+
+<p>The <em>fork()</em> function returns either the process id (PID) of the child 
+process (not equal to zero), or -1 on failure. If the process cannot fork a 
+child, then the daemon should terminate right here.</p>
+
+<p>If the PID returned from <em>fork()</em> did succeed, the parent process must 
+exit gracefully. This may seem strange to anyone who hasn't seen it, but by 
+forking, the child process continues the execution from here on out in the code.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss4.2">4.2</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc4.2">Changing The File Mode Mask (Umask)</a>
+</h2>
+
+<p>In order to write to any files (including logs) created by the daemon, the 
+file mode mask (umask) must be changed to ensure that they can be written to or 
+read from properly. This is similar to running umask from the command line, but 
+we do it programmatically here. We can use the <em>umask()</em> function to 
+accomplish this:</p>
+<p>
+</p><blockquote><code>
+</code><pre>        pid_t pid, sid;
+        
+        /* Fork off the parent process */
+        pid = fork();
+        if (pid &lt; 0) {
+                /* Log failure (use syslog if possible) */
+                exit(EXIT_FAILURE);
+        }
+        /* If we got a good PID, then
+           we can exit the parent process. */
+        if (pid &gt; 0) {
+                exit(EXIT_SUCCESS);
+        }
+
+        /* Change the file mode mask */
+        umask(0);
+        
+</pre>
+</blockquote>
+<p></p>
+
+<p>By setting the umask to 0, we will have full access to the files generated by 
+the daemon. Even if you aren't planning on using any files, it is a good idea to 
+set the umask here anyway, just in case you will be accessing files on the 
+filesystem.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss4.3">4.3</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc4.3">Opening Logs For Writing</a>
+</h2>
+
+<p>This part is optional, but it is recommended that you open a log file 
+somewhere in the system for writing. This may be the only place you can look for 
+debug information about your daemon.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss4.4">4.4</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc4.4">Creating a Unique Session ID (SID)</a>
+</h2>
+
+<p>From here, the child process must get a unique SID from the kernel in order 
+to operate. Otherwise, the child process becomes an orphan in the system. The 
+pid_t type, declared in the previous section, is also used to create a new 
+SID for the child process:
+</p><blockquote><code>
+</code><pre>        pid_t pid, sid;
+        
+        /* Fork off the parent process */
+        pid = fork();
+        if (pid &lt; 0) {
+                exit(EXIT_FAILURE);
+        }
+        /* If we got a good PID, then
+           we can exit the parent process. */
+        if (pid &gt; 0) {
+                exit(EXIT_SUCCESS);
+        }
+        
+        /* Change the file mode mask */
+        umask(0);
+        
+        /* Open any logs here */
+        
+        /* Create a new SID for the child process */
+        sid = setsid();
+        if (sid &lt; 0) {
+                /* Log any failure */
+                exit(EXIT_FAILURE);
+        }
+</pre>
+</blockquote>
+<p></p>
+
+<p>Again, the <em>setsid()</em> function has the same return type 
+as <em>fork()</em>. We can apply the same error-checking routine here to see if 
+the function created the SID for the child process.</p>
+
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss4.5">4.5</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc4.5">Changing The Working Directory</a>
+</h2>
+
+<p>The current working directory should be changed to some place that is 
+guaranteed to always be there. Since many Linux distributions do not completely 
+follow the Linux Filesystem Hierarchy standard, the only directory that is 
+guaranteed to be there is the root (/). We can do this using the 
+<em>chdir()</em> function:</p>
+<p>
+</p><blockquote><code>
+</code><pre>        pid_t pid, sid;
+        
+        /* Fork off the parent process */
+        pid = fork();
+        if (pid &lt; 0) {
+                exit(EXIT_FAILURE);
+        }
+        /* If we got a good PID, then
+           we can exit the parent process. */
+        if (pid &gt; 0) {
+                exit(EXIT_SUCCESS);
+        }
+
+        /* Change the file mode mask */
+        umask(0);       
+        
+        /* Open any logs here */        
+                
+        /* Create a new SID for the child process */
+        sid = setsid();
+        if (sid &lt; 0) {
+                /* Log any failure here */
+                exit(EXIT_FAILURE);
+        }
+        
+        /* Change the current working directory */
+        if ((chdir("/")) &lt; 0) {
+                /* Log any failure here */
+                exit(EXIT_FAILURE);
+        }
+        
+</pre>
+</blockquote>
+<p></p>
+
+<p>Once again, you can see the defensive coding taking place. The 
+<em>chdir()</em> function returns -1 on failure, so be sure to check for that 
+after changing to the root directory within the daemon.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss4.6">4.6</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc4.6">Closing Standard File Descriptors</a>
+</h2>
+
+<p>One of the last steps in setting up a daemon is closing out the standard file 
+descriptors (STDIN, STDOUT, STDERR). Since a daemon cannot use the terminal, 
+these file descriptors are redundant and a potential security hazard.</p>
+
+<p>The <em>close()</em> function can handle this for us:</p>
+<p>
+</p><blockquote><code>
+</code><pre>        pid_t pid, sid;
+        
+        /* Fork off the parent process */
+        pid = fork();
+        if (pid &lt; 0) {
+                exit(EXIT_FAILURE);
+        }
+        /* If we got a good PID, then
+           we can exit the parent process. */
+        if (pid &gt; 0) {
+                exit(EXIT_SUCCESS);
+        }
+        
+        /* Change the file mode mask */
+        umask(0);       
+        
+        /* Open any logs here */
+        
+        /* Create a new SID for the child process */
+        sid = setsid();
+        if (sid &lt; 0) {
+                /* Log any failure here */
+                exit(EXIT_FAILURE);
+        }
+        
+        /* Change the current working directory */
+        if ((chdir("/")) &lt; 0) {
+                /* Log any failure here */
+                exit(EXIT_FAILURE);
+        }
+        
+        
+        /* Close out the standard file descriptors */
+        close(STDIN_FILENO);
+        close(STDOUT_FILENO);
+        close(STDERR_FILENO);
+</pre>
+</blockquote>
+<p></p>
+
+<p>It's a good idea to stick with the constants defined for the file descriptors,
+for the greatest portability between system versions.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="s5">5.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc5">Writing the Daemon Code</a></h2>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss5.1">5.1</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc5.1">Initialization</a>
+</h2>
+
+<p>At this point, you have basically told Linux that you're a daemon, so now 
+it's time to write the actual daemon code. Initialization is the first step 
+here. Since there can be a multitude of different functions that can be called 
+here to set up your daemon's task, I won't go too deep into here.</p>
+
+<p>The big point here is that, when initializing anything in a daemon, the same 
+defensive coding guidelines apply here. Be as verbose as possible when writing 
+either to the syslog or your own logs. Debugging a daemon can be quite difficult 
+when there isn't enough information available as to the status of the daemon.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss5.2">5.2</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc5.2">The Big Loop</a>
+</h2>
+
+<p>A daemon's main code is typically inside of an infinite loop. Technically, 
+it isn't an infinite loop, but it is structured as one:</p>
+<p>
+</p><blockquote><code>
+</code><pre>        pid_t pid, sid;
+        
+        /* Fork off the parent process */
+        pid = fork();
+        if (pid &lt; 0) {
+                exit(EXIT_FAILURE);
+        }
+        /* If we got a good PID, then
+           we can exit the parent process. */
+        if (pid &gt; 0) {
+                exit(EXIT_SUCCESS);
+        }
+
+        /* Change the file mode mask */
+        umask(0);       
+        
+        /* Open any logs here */
+        
+        /* Create a new SID for the child process */
+        sid = setsid();
+        if (sid &lt; 0) {
+                /* Log any failures here */
+                exit(EXIT_FAILURE);
+        }
+        
+        
+        /* Change the current working directory */
+        if ((chdir("/")) &lt; 0) {
+                /* Log any failures here */
+                exit(EXIT_FAILURE);
+        }
+        
+        /* Close out the standard file descriptors */
+        close(STDIN_FILENO);
+        close(STDOUT_FILENO);
+        close(STDERR_FILENO);
+        
+        /* Daemon-specific initialization goes here */
+        
+        /* The Big Loop */
+        while (1) {
+           /* Do some task here ... */
+           sleep(30); /* wait 30 seconds */
+        }
+</pre>
+</blockquote>
+<p></p>
+
+<p>This typical loop is usually a <em>while</em> loop that has an infinite 
+terminating condition, with a call to <em>sleep</em> in there to make it run at 
+specified intervals. </p>
+
+<p>Think of it like a heartbeat: when your heart beats, it 
+performs a few tasks, then waits until the next beat takes place. Many daemons 
+follow this same methodology.</p>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="s6">6.</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc6">Putting It All Together</a></h2>
+
+<h2><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html" name="ss6.1">6.1</a> <a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html#toc6.1">Complete Sample</a>
+</h2>
+
+<p>Listed below is a complete sample daemon that shows all of the steps 
+necessary for setup and execution. To run this, simply compile using gcc, and 
+start execution from the command line. To terminate, use the <i>kill</i> 
+command after finding its PID.</p>
+
+<p>I've also put in the correct include statements for interfacing with the syslog,
+which is recommended at the very least for sending start/stop/pause/die log statements, in
+addition to using your own logs with the <em>fopen()</em>/<em>fwrite()</em>/<em>fclose()</em>
+function calls.</p>
+<p>
+</p><blockquote><code>
+</code><pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;syslog.h&gt;
+#include &lt;string.h&gt;
+
+int main(void) {
+        
+        /* Our process ID and Session ID */
+        pid_t pid, sid;
+        
+        /* Fork off the parent process */
+        pid = fork();
+        if (pid &lt; 0) {
+                exit(EXIT_FAILURE);
+        }
+        /* If we got a good PID, then
+           we can exit the parent process. */
+        if (pid &gt; 0) {
+                exit(EXIT_SUCCESS);
+        }
+
+        /* Change the file mode mask */
+        umask(0);
+                
+        /* Open any logs here */        
+                
+        /* Create a new SID for the child process */
+        sid = setsid();
+        if (sid &lt; 0) {
+                /* Log the failure */
+                exit(EXIT_FAILURE);
+        }
+        
+
+        
+        /* Change the current working directory */
+        if ((chdir("/")) &lt; 0) {
+                /* Log the failure */
+                exit(EXIT_FAILURE);
+        }
+        
+        /* Close out the standard file descriptors */
+        close(STDIN_FILENO);
+        close(STDOUT_FILENO);
+        close(STDERR_FILENO);
+        
+        /* Daemon-specific initialization goes here */
+        
+        /* The Big Loop */
+        while (1) {
+           /* Do some task here ... */
+           
+           sleep(30); /* wait 30 seconds */
+        }
+   exit(EXIT_SUCCESS);
+}
+</pre>
+</blockquote>
+<p></p>
+<p>From here, you can use this skeleton to write your own daemons. Be sure to 
+add in your own logging (or use the syslog facility), and code defensively, 
+code defensively, code defensively!</p>
+
+<script language="Javascript">
+<!--
+
+// FILE ARCHIVED ON 20060603181849 AND RETRIEVED FROM THE
+// INTERNET ARCHIVE ON 20070529120944.
+// JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+// ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+// SECTION 108(a)(3)).
+
+   var sWayBackCGI = "http://web.archive.org/web/20060603181849/";
+
+   function xResolveUrl(url) {
+      var image = new Image();
+      image.src = url;
+      return image.src;
+   }
+   function xLateUrl(aCollection, sProp) {
+      var i = 0;
+      for(i = 0; i < aCollection.length; i++) {
+         if (typeof(aCollection[i][sProp]) == "string") { 
+          if (aCollection[i][sProp].indexOf("mailto:") == -1 &&
+             aCollection[i][sProp].indexOf("javascript:") == -1) {
+            if(aCollection[i][sProp].indexOf("http") == 0) {
+                aCollection[i][sProp] = sWayBackCGI + aCollection[i][sProp];
+            } else {
+                aCollection[i][sProp] = sWayBackCGI + xResolveUrl(aCollection[i][sProp]);
+            }
+         }
+         }
+      }
+   }
+
+   xLateUrl(document.getElementsByTagName("IMG"),"src");
+   xLateUrl(document.getElementsByTagName("A"),"href");
+   xLateUrl(document.getElementsByTagName("AREA"),"href");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"codebase");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"data");
+   xLateUrl(document.getElementsByTagName("APPLET"),"codebase");
+   xLateUrl(document.getElementsByTagName("APPLET"),"archive");
+   xLateUrl(document.getElementsByTagName("EMBED"),"src");
+   xLateUrl(document.getElementsByTagName("BODY"),"background");
+   var forms = document.getElementsByTagName("FORM");
+   if (forms) {
+       var j = 0;
+       for (j = 0; j < forms.length; j++) {
+              f = forms[j];
+              if (typeof(f.action)  == "string") {
+                 if(typeof(f.method)  == "string") {
+                     if(typeof(f.method) != "post") {
+                        f.action = sWayBackCGI + f.action;
+                     }
+                  }
+              }
+        }
+    }
+
+
+//-->
+</script>
+
+
+</body></html>

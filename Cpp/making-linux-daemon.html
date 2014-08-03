@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
+  "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html lang="en" dir="ltr"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta about="/content/making-linux-daemon" property="sioc:num_replies" content="11" datatype="xsd:integer" />
+<link rel="shortcut icon" href="http://blog2.emptycrate.com/sites/all/themes/mybootstrap/favicon.ico" type="image/vnd.microsoft.icon" />
+<meta content="Making a Linux Daemon" about="/content/making-linux-daemon" property="dc:title" />
+<link rel="canonical" href="/content/making-linux-daemon" />
+<meta name="Generator" content="Drupal 7 (http://drupal.org)" />
+<script type="text/x-mathjax-config">MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ['\\(','\\)'], ['[math]', '[/math]' ],
+    processEscapes: true
+  }
+});</script><link rel="shortlink" href="/node/4284" />
+  <title>Making a Linux Daemon | EmptyCrate</title>
+  <link type="text/css" rel="stylesheet" href="http://blog2.emptycrate.com/sites/default/files/css/css_ogjvJnfni1_P_WxvXAHlUOgCs860b3ip9DNMapcIGeM.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://blog2.emptycrate.com/sites/default/files/css/css_Hj-L7XQcE0qfyJRECGV_H0uiR6AMwoPoTuTUbvzzim0.css" media="screen" />
+<link type="text/css" rel="stylesheet" href="http://blog2.emptycrate.com/sites/default/files/css/css_kvaqtp5WyrrHbRp04EMjxDRU1slGUfavu9v2bsvcoDU.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://blog2.emptycrate.com/sites/default/files/css/css_dBY0AVGSfUCsfMXO2fUSUsKHPF-dpMet_2zwBrBr99I.css" media="all" />
+<link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://blog2.emptycrate.com/sites/default/files/css/css_ML5fTFdHzk9eRY-CDEaXk7ZXWNVXvfUWn3dCqQJ4xVc.css" media="all" />
+  <!-- HTML5 element support for IE6-8 -->
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script>window.google_analytics_uacct = "UA-384017-6";</script>
+<script src="http://blog2.emptycrate.com/sites/default/files/js/js_-z-2lAhufzBeVjYseT6cTzSICUy9vnoLBpu1sF_zZrs.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script src="http://blog2.emptycrate.com/sites/default/files/js/js_xnaB0jBYrGI0G159tJmr4dCKw1naro5R-LaIgsgzruY.js"></script>
+<script src="http://blog2.emptycrate.com/sites/default/files/js/js_yDbJFF-MKXnnHxciclo35_tsC3-m5K2oM0w0Sqpx4Wc.js"></script>
+<script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>(function ($) {
+Drupal.behaviors.adSenseUnblock = {
+  attach: function (context) {
+    if ($('.adsense ins').height() === null) {
+      $('.adsense').html(Drupal.t("Please, enable ads on this site. By using ad-blocking software, you're depriving this site of revenue that is needed to keep it free and current. Thank you."));
+      $('.adsense').css({'overflow': 'hidden', 'font-size': 'x-small'});
+    }
+  }
+};
+
+})(jQuery);
+</script>
+<script src="http://blog2.emptycrate.com/sites/default/files/js/js_rv_BKYv7yieH0IgHddhWHDC-bWGan8yiJbusyOpr0mw.js"></script>
+<script>var _gaq = _gaq || [];_gaq.push(["_setAccount", "UA-384017-6"]);_gaq.push(["_gat._anonymizeIp"]);_gaq.push(["_trackPageview"]);(function() {var ga = document.createElement("script");ga.type = "text/javascript";ga.async = true;ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ga, s);})();</script>
+<script>jQuery.extend(Drupal.settings, {"basePath":"\u002F", "pathPrefix":"", "ajaxPageState":{"theme":"mybootstrap", "theme_token":"cL0ayPgIxQmY_ulSZpzgLfBG18MSEbappQcQXCGqax4", "js":{"modules\u002Fstatistics\u002Fstatistics.js":1, "sites\u002Fall\u002Fthemes\u002Fbootstrap\u002Fjs\u002Fbootstrap.js":1, "0":1, "sites\u002Fall\u002Fmodules\u002Fjquery_update\u002Freplace\u002Fjquery\u002F1.8\u002Fjquery.min.js":1, "misc\u002Fjquery.once.js":1, "misc\u002Fdrupal.js":1, "\u002F\u002Fnetdna.bootstrapcdn.com\u002Fbootstrap\u002F3.0.2\u002Fjs\u002Fbootstrap.min.js":1, "sites\u002Fall\u002Fmodules\u002Fcodefilter\u002Fcodefilter.js":1, "sites\u002Fall\u002Fmodules\u002Fadsense\u002Fcontrib\u002Fadsense_click\u002Fadsense_click.js":1, "sites\u002Fall\u002Fmodules\u002Fmathjax\u002Fmathjax.js":1, "https:\u002F\u002Fc328740.ssl.cf1.rackcdn.com\u002Fmathjax\u002Flatest\u002FMathJax.js?config=TeX-AMS-MML_HTMLorMML":1, "1":1, "sites\u002Fall\u002Fmodules\u002Fgoogle_analytics\u002Fgoogleanalytics.js":1, "2":1}, "css":{"modules\u002Fsystem\u002Fsystem.base.css":1, "sites\u002Fall\u002Fmodules\u002Fcodefilter\u002Fcodefilter.css":1, "modules\u002Ffield\u002Ftheme\u002Ffield.css":1, "sites\u002Fall\u002Fmodules\u002Fviews\u002Fcss\u002Fviews.css":1, "sites\u002Fall\u002Fmodules\u002Fctools\u002Fcss\u002Fctools.css":1, "sites\u002Fall\u002Fmodules\u002Fgeshifilter\u002Fgeshifilter.css":1, "sites\u002Fall\u002Fmodules\u002Ftagclouds\u002Ftagclouds.css":1, "\u002F\u002Fnetdna.bootstrapcdn.com\u002Fbootstrap\u002F3.0.2\u002Fcss\u002Fbootstrap.min.css":1, "sites\u002Fall\u002Fthemes\u002Fbootstrap\u002Fcss\u002Foverrides.css":1, "sites\u002Fall\u002Fthemes\u002Fmybootstrap\u002Fcss\u002Fstyle.css":1}}, "googleanalytics":{"trackOutbound":1, "trackMailto":1, "trackDownload":1, "trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip"}, "statistics":{"data":{"nid":"4284"}, "url":"\u002Fmodules\u002Fstatistics\u002Fstatistics.php"}, "bootstrap":{"anchorsFix":1, "anchorsSmoothScrolling":1, "popoverEnabled":1, "popoverOptions":{"animation":1, "html":0, "placement":"right", "selector":"", "trigger":"click", "title":"", "content":"", "delay":0, "container":"body"}, "tooltipEnabled":1, "tooltipOptions":{"animation":1, "html":0, "placement":"auto left", "selector":"", "trigger":"hover focus", "delay":0, "container":"body"}}});</script>
+</head>
+<body class="html not-front not-logged-in one-sidebar sidebar-first page-node page-node- page-node-4284 node-type-blog" >
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
+  </div>
+    <header id="navbar" role="banner" class="navbar container navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+            <a class="logo navbar-btn pull-left" href="/" title="Home">
+        <img src="http://blog2.emptycrate.com/sites/default/files/emptycrate.png" alt="Home" />
+      </a>
+      
+            <a class="name navbar-brand" href="/" title="Home">EmptyCrate</a>
+      
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+          <div class="navbar-collapse collapse">
+        <nav role="navigation">
+                      <ul class="menu nav navbar-nav"><li class="first leaf"><a href="/">Home</a></li>
+<li class="leaf"><a href="http://chaiscript.com" title="">ChaiScript: Easy C++ Scripting</a></li>
+<li class="leaf"><a href="/content/so-you-want-embed-scripting-language-your-application">Embedded C++ Scripting</a></li>
+<li class="last leaf"><a href="https://code.google.com/p/swigstarterkit/" title="">SWIG Starter Kit</a></li>
+</ul>                                      </nav>
+      </div>
+      </div>
+</header>
+
+<div class="main-container container">
+
+  <header role="banner" id="page-header">
+    
+      </header> <!-- /#page-header -->
+
+  <div class="row">
+
+          <aside class="col-sm-3" role="complementary">
+          <div class="region region-sidebar-first well">
+    <section id="block-tagclouds-1" class="block block-tagclouds clearfix">
+
+      
+  <span class='tagclouds-term'><a href="/tags/articles" class="tagclouds level3" title="">Articles</a></span>
+<span class='tagclouds-term'><a href="/tags/boost" class="tagclouds level2" title="">Boost</a></span>
+<span class='tagclouds-term'><a href="/tags/cpp" class="tagclouds level6" title="">C++</a></span>
+<span class='tagclouds-term'><a href="/tags/changelog" class="tagclouds level2" title="">Changelog</a></span>
+<span class='tagclouds-term'><a href="/tags/emptycrate-game-engine" class="tagclouds level1" title="">EmptyCrate Game Engine</a></span>
+<span class='tagclouds-term'><a href="/tags/ex-astris" class="tagclouds level1" title="">Ex Astris</a></span>
+<span class='tagclouds-term'><a href="/tags/haskell" class="tagclouds level1" title="">Haskell</a></span>
+<span class='tagclouds-term'><a href="/tags/nobody-understands" class="tagclouds level2" title="">Nobody Understands</a></span>
+<span class='tagclouds-term'><a href="/tags/optimization" class="tagclouds level1" title="">Optimization</a></span>
+<span class='tagclouds-term'><a href="/tags/programming" class="tagclouds level6" title="">Programming</a></span>
+<span class='tagclouds-term'><a href="/tags/templates" class="tagclouds level2" title="">Templates</a></span>
+<span class='tagclouds-term'><a href="/tags/threads" class="tagclouds level2" title="">Threads</a></span>
+<div class="more-link"><a href="/tagclouds/chunk/1" title="more tags">More</a></div>
+</section> <!-- /.block -->
+<section id="block-system-navigation" class="block block-system block-menu clearfix">
+
+        <h2 class="block-title">Navigation</h2>
+    
+  <ul class="menu nav"><li class="first leaf"><a href="/contact">Contact</a></li>
+<li class="last leaf"><a href="/tracker">Recent content</a></li>
+</ul>
+</section> <!-- /.block -->
+<section id="block-views-similarterms-block" class="block block-views clearfix">
+
+        <h2 class="block-title">Related</h2>
+    
+  <div class="view view-similarterms view-id-similarterms view-display-id-block view-dom-id-2e5b733a7b01a75d1d0aaaa2dc9bc96f">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/content/new-programming-language-minnow">New Programming Language: Minnow</a></span>  </div>  </div>
+  <div class="views-row views-row-2 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/content/creating-bad-code-thats-still-great">Creating Bad Code That&#039;s Still Great</a></span>  </div>  </div>
+  <div class="views-row views-row-3 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/content/soundex-algorithm">Soundex Algorithm</a></span>  </div>  </div>
+  <div class="views-row views-row-4 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/content/when-use-include-verses-include">When to use #include &quot;&quot; verses #include &lt;&gt;</a></span>  </div>  </div>
+  <div class="views-row views-row-5 views-row-odd views-row-last">
+      
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/content/how-do-you-know-if-you-have-hash-collision">How Do You Know If You Have a Hash Collision?</a></span>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>
+</section> <!-- /.block -->
+  </div>
+      </aside>  <!-- /#sidebar-first -->
+    
+    <section class="col-sm-9">
+            <ol class="breadcrumb"><li class="first"><a href="/blog">Blogs</a></li>
+<li><a href="/blogs/jason">jason&#039;s blog</a></li>
+<li class="active last">Making a Linux Daemon</li>
+</ol>      <a id="main-content"></a>
+                    <h1 class="page-header">Making a Linux Daemon</h1>
+                                                          <div class="region region-content">
+    <div id="block--managed-0" class="block block--managed">
+
+    
+  <div class="content">
+    <div style='text-align:center'><div class='adsense adsense_managed_' style='display:inline-block;width:728px;height:90px;'>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-1595128002130008";
+/* 728x90 */
+google_ad_slot = "5302735515";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>  </div>
+</div>
+<section id="block-system-main" class="block block-system clearfix">
+
+      
+  <div id="node-4284" class="node node-blog node-promoted clearfix" about="/content/making-linux-daemon" typeof="sioc:Post sioct:BlogPost">
+
+  
+      
+      <div class="submitted">
+      <span property="dc:date dc:created" content="2006-05-01T15:15:34-06:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/users/jason" typeof="sioc:UserAccount" property="foaf:name" datatype="">jason</span> on Mon, 05/01/2006 - 15:15</span>    </div>
+  
+  <div class="content">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I just faced this problem at work and found a great little document that gave me the insight I needed. I'm posting it here for anyone else who is interested.</p>
+<p><a href="http://www.linuxprofilm.com/articles/linux-daemon-howto.html">http://www.linuxprofilm.com/articles/linux-daemon-howto.html</a></p>
+<p><em>Update</em><br />
+This page is currently the most popular on the site and it was well overdue for a refresh.</p>
+<p>As stated in comments below the simplest way to do this in Linux is to use the <span class="geshifilter"><code class="cpp geshifilter-cpp">daemon<span style="color: #008000;">(</span><span style="color: #008000;">)</span></code></span> system call. However, this function does not exist in System V based Unix distributions (ie, Solaris).</p>
+<p>The basic concept that needs to happen is that your application forks itself and shuts down its standard input/output/error connections.</p>
+<p>The C++ code I use for this is:</p>
+<div class="geshifilter">
+<div class="cpp geshifilter-cpp" style="font-family:monospace;"><span style="color: #666666;">//! daemonize the currently running programming</span><br /><span style="color: #666666;">//! Note: the calls to strerror are not thread safe, but that should not matter</span><br /><span style="color: #666666;">//! as the application is only just starting up when this function is called</span><br /><span style="color: #666666;">//! \param[in] dir which dir to ch to after becoming a daemon</span><br /><span style="color: #666666;">//! \param[in] stdinfile file to redirect stdin to</span><br /><span style="color: #666666;">//! \param[in] stdoutfile file to redirect stdout from</span><br /><span style="color: #666666;">//! \param[in] stderrfile file to redirect stderr to</span><br /><span style="color: #0000ff;">void</span> System<span style="color: #008080;">::</span><span style="color: #007788;">daemonize</span><span style="color: #008000;">(</span><span style="color: #0000ff;">const</span> string <span style="color: #000040;">&amp;</span>dir <span style="color: #000080;">=</span> <span style="color: #FF0000;">"/"</span>,<br />
+               <span style="color: #0000ff;">const</span> std<span style="color: #008080;">::</span><span style="color: #007788;">string</span> <span style="color: #000040;">&amp;</span>stdinfile <span style="color: #000080;">=</span> <span style="color: #FF0000;">"/dev/null"</span>,<br />
+               <span style="color: #0000ff;">const</span> std<span style="color: #008080;">::</span><span style="color: #007788;">string</span> <span style="color: #000040;">&amp;</span>stdoutfile <span style="color: #000080;">=</span> <span style="color: #FF0000;">"/dev/null"</span>,<br />
+               <span style="color: #0000ff;">const</span> std<span style="color: #008080;">::</span><span style="color: #007788;">string</span> <span style="color: #000040;">&amp;</span>stderrfile <span style="color: #000080;">=</span> <span style="color: #FF0000;">"/dev/null"</span><span style="color: #008000;">)</span><br /><span style="color: #008000;">{</span><br />
+  umask<span style="color: #008000;">(</span><span style="color: #0000dd;">0</span><span style="color: #008000;">)</span><span style="color: #008080;">;</span>
+<p>  rlimit rl<span style="color: #008080;">;</span><br />
+  <span style="color: #0000ff;">if</span> <span style="color: #008000;">(</span>getrlimit<span style="color: #008000;">(</span>RLIMIT_NOFILE, <span style="color: #000040;">&amp;</span>rl<span style="color: #008000;">)</span> <span style="color: #000080;">&lt;</span> <span style="color: #0000dd;">0</span><span style="color: #008000;">)</span> <br />
+  <span style="color: #008000;">{</span><br />
+    <span style="color: #666666;">//can't get file limit</span><br />
+    <span style="color: #0000ff;">throw</span> std<span style="color: #008080;">::</span><span style="color: #007788;">runtime_error</span><span style="color: #008000;">(</span><span style="color: #0000dd;">strerror</span><span style="color: #008000;">(</span><span style="color: #0000ff;">errno</span><span style="color: #008000;">)</span><span style="color: #008000;">)</span><span style="color: #008080;">;</span><br />
+  <span style="color: #008000;">}</span></p>
+<p>  pid_t pid<span style="color: #008080;">;</span><br />
+  <span style="color: #0000ff;">if</span> <span style="color: #008000;">(</span><span style="color: #008000;">(</span>pid <span style="color: #000080;">=</span> fork<span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">)</span> <span style="color: #000080;">&lt;</span> <span style="color: #0000dd;">0</span><span style="color: #008000;">)</span> <br />
+  <span style="color: #008000;">{</span><br />
+    <span style="color: #666666;">//Cannot fork!</span><br />
+    <span style="color: #0000ff;">throw</span> std<span style="color: #008080;">::</span><span style="color: #007788;">runtime_error</span><span style="color: #008000;">(</span><span style="color: #0000dd;">strerror</span><span style="color: #008000;">(</span><span style="color: #0000ff;">errno</span><span style="color: #008000;">)</span><span style="color: #008000;">)</span><span style="color: #008080;">;</span><br />
+  <span style="color: #008000;">}</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">(</span>pid <span style="color: #000040;">!</span><span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span> <span style="color: #666666;">//parent</span><br />
+    <span style="color: #0000dd;">exit</span><span style="color: #008000;">(</span><span style="color: #0000dd;">0</span><span style="color: #008000;">)</span><span style="color: #008080;">;</span><br />
+  <span style="color: #008000;">}</span></p>
+<p>  setsid<span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008080;">;</span></p>
+<p>  <span style="color: #0000ff;">if</span> <span style="color: #008000;">(</span><span style="color: #000040;">!</span>dir.<span style="color: #007788;">empty</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #000040;">&amp;&amp;</span> chdir<span style="color: #008000;">(</span>dir.<span style="color: #007788;">c_str</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">)</span> <span style="color: #000080;">&lt;</span> <span style="color: #0000dd;">0</span><span style="color: #008000;">)</span> <br />
+  <span style="color: #008000;">{</span><br />
+    <span style="color: #666666;">// Oops we couldn't chdir to the new directory</span><br />
+    <span style="color: #0000ff;">throw</span> std<span style="color: #008080;">::</span><span style="color: #007788;">runtime_error</span><span style="color: #008000;">(</span><span style="color: #0000dd;">strerror</span><span style="color: #008000;">(</span><span style="color: #0000ff;">errno</span><span style="color: #008000;">)</span><span style="color: #008000;">)</span><span style="color: #008080;">;</span><br />
+  <span style="color: #008000;">}</span></p>
+<p>  <span style="color: #0000ff;">if</span> <span style="color: #008000;">(</span>rl.<span style="color: #007788;">rlim_max</span> <span style="color: #000080;">==</span> RLIM_INFINITY<span style="color: #008000;">)</span> <br />
+  <span style="color: #008000;">{</span><br />
+    rl.<span style="color: #007788;">rlim_max</span> <span style="color: #000080;">=</span> <span style="color: #0000dd;">1024</span><span style="color: #008080;">;</span><br />
+  <span style="color: #008000;">}</span></p>
+<p>  <span style="color: #666666;">// Close all open file descriptors</span><br />
+  <span style="color: #0000ff;">for</span> <span style="color: #008000;">(</span><span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> i <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i <span style="color: #000080;">&lt;</span> rl.<span style="color: #007788;">rlim_max</span><span style="color: #008080;">;</span> i<span style="color: #000040;">++</span><span style="color: #008000;">)</span> <br />
+  <span style="color: #008000;">{</span><br />
+    close<span style="color: #008000;">(</span>i<span style="color: #008000;">)</span><span style="color: #008080;">;</span><br />
+  <span style="color: #008000;">}</span></p>
+<p>  <span style="color: #0000ff;">int</span> fd0 <span style="color: #000080;">=</span> open<span style="color: #008000;">(</span>stdinfile.<span style="color: #007788;">c_str</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span>, O_RDONLY<span style="color: #008000;">)</span><span style="color: #008080;">;</span><br />
+  <span style="color: #0000ff;">int</span> fd1 <span style="color: #000080;">=</span> open<span style="color: #008000;">(</span>stdoutfile.<span style="color: #007788;">c_str</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span>,<br />
+      O_WRONLY<span style="color: #000040;">|</span>O_CREAT<span style="color: #000040;">|</span>O_APPEND, S_IRUSR<span style="color: #000040;">|</span>S_IWUSR<span style="color: #008000;">)</span><span style="color: #008080;">;</span><br />
+  <span style="color: #0000ff;">int</span> fd2 <span style="color: #000080;">=</span> open<span style="color: #008000;">(</span>stderrfile.<span style="color: #007788;">c_str</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span>,<br />
+      O_WRONLY<span style="color: #000040;">|</span>O_CREAT<span style="color: #000040;">|</span>O_APPEND, S_IRUSR<span style="color: #000040;">|</span>S_IWUSR<span style="color: #008000;">)</span><span style="color: #008080;">;</span></p>
+<p>  <span style="color: #0000ff;">if</span> <span style="color: #008000;">(</span>fd0 <span style="color: #000040;">!</span><span style="color: #000080;">=</span> STDIN_FILENO <span style="color: #000040;">||</span> fd1 <span style="color: #000040;">!</span><span style="color: #000080;">=</span> STDOUT_FILENO <span style="color: #000040;">||</span> fd2 <span style="color: #000040;">!</span><span style="color: #000080;">=</span> STDERR_FILENO<span style="color: #008000;">)</span> <br />
+  <span style="color: #008000;">{</span><br />
+    <span style="color: #666666;">//Unexpected file descriptors</span><br />
+    <span style="color: #0000ff;">throw</span> runtime_error<span style="color: #008000;">(</span><span style="color: #FF0000;">"new standard file descriptors were not opened as expected"</span><span style="color: #008000;">)</span><span style="color: #008080;">;</span><br />
+  <span style="color: #008000;">}</span><br /><span style="color: #008000;">}</span></p></div>
+</div>
+<p>By removing the references to <span class="geshifilter"><code class="cpp geshifilter-cpp">std<span style="color: #008080;">::</span><span style="color: #007788;">string</span></code></span> and <span class="geshifilter"><code class="cpp geshifilter-cpp"><span style="color: #0000ff;">throw</span></code></span> this code is easily converted to C code.</p>
+<p>The book "Advanced Programming in the UNIX Environment" covers in depth how to deamonize a process, why you would want to and what happens under the hood. I keep it as a desk reference and highly recommend it. </p>
+<p>The hardback version:</p>
+<p><a href="http://www.amazon.com/gp/product/0201433079?ie=UTF8&amp;tag=empcra-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0201433079">Advanced Programming in the UNIX(R) Environment (2nd Edition) (Addison-Wesley Professional Computing Series)</a></p>
+<p>And paperback is now available too: </p>
+<p><a href="http://www.amazon.com/gp/product/0321525949?ie=UTF8&amp;tag=empcra-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321525949">Advanced Programming in the UNIX Environment: Paperback Edition (2nd Edition) (Addison-Wesley Professional Computing Series)</a></p>
+</div></div></div><!-- google_ad_section_end --><div class="field field-name-field-tag field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tag:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/programming" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Programming</a></div></div></div>  </div>
+
+  <ul class="links well well-sm list-inline"><li class="blog_usernames_blog first"><a href="/blogs/jason" title="Read jason&#039;s latest blog entries.">jason&#039;s blog</a></li>
+<li class="comment_forbidden last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul>
+  <div id="comments" class="comment-wrapper">
+          <h2 class="title">Comments</h2>
+      
+  <a id="comment-6207"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6207#comment-6207" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6207#comment-6207" class="permalink" rel="bookmark">A bit complex</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6207#comment-6207" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2007-01-16T12:55:00-07:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">Anonymous (not verified)</span> on Tue, 01/16/2007 - 12:55</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Using the daemon() system call would eliminate 3/4 of the program.</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+
+<div class="indented"><a id="comment-6208"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6208#comment-6208" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6208#comment-6208" class="permalink" rel="bookmark">If it exists...</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6208#comment-6208" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2007-01-16T15:17:16-07:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">anonymous (not verified)</span> on Tue, 01/16/2007 - 15:17</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><span rel="sioc:reply_of" resource="/comment/98#comment-98" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The daemon() system call would have been a good choice at the time that I posted that comment, good point. However, it is a nonstandard call and may or may not exist on the platform you are writing for.</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+</div><a id="comment-6209"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6209#comment-6209" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6209#comment-6209" class="permalink" rel="bookmark">Linux Daemon how-to document gone!</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6209#comment-6209" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2007-03-20T16:31:40-06:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">Anonymous (not verified)</span> on Tue, 03/20/2007 - 16:31</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Ah well.. looks like that how-to write a Daemon article is toast.  Anybody have a copy of their own - there was a PDF originally as well.  Looking to create some Daemons using C on embedded Linux.</p>
+<p>Thanks muchly.</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+
+<div class="indented"><a id="comment-6211"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6211#comment-6211" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6211#comment-6211" class="permalink" rel="bookmark">http://www.linuxprofilm.com/a</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6211#comment-6211" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2007-04-01T06:09:04-06:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">Anonymous (not verified)</span> on Sun, 04/01/2007 - 06:09</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><span rel="sioc:reply_of" resource="/comment/100#comment-100" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="http://www.linuxprofilm.com/articles/linux-daemon-howto.html">http://www.linuxprofilm.com/articles/linux-daemon-howto.html</a></p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+<a id="comment-6212"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6212#comment-6212" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6212#comment-6212" class="permalink" rel="bookmark">http://web.archive.org/web/20</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6212#comment-6212" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2007-04-01T06:14:19-06:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">Anonymous (not verified)</span> on Sun, 04/01/2007 - 06:14</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><span rel="sioc:reply_of" resource="/comment/100#comment-100" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/articles/linux-daemon-howto.html">http://web.archive.org/web/20060603181849/http://www.linuxprofilm.com/ar...</a></p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+
+<div class="indented"><a id="comment-6213"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6213#comment-6213" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6213#comment-6213" class="permalink" rel="bookmark">Thank you</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6213#comment-6213" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2007-04-03T19:55:00-06:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">WARnux.com (not verified)</span> on Tue, 04/03/2007 - 19:55</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><span rel="sioc:reply_of" resource="/comment/103#comment-103" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Linux Rules!<br />
+Thank you.</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+
+<div class="indented"><a id="comment-6218"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6218#comment-6218" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6218#comment-6218" class="permalink" rel="bookmark">how to restart a daemon after it terminates in source code</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6218#comment-6218" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2008-01-21T19:06:07-07:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">mike (not verified)</span> on Mon, 01/21/2008 - 19:06</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><span rel="sioc:reply_of" resource="/comment/104#comment-104" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I am trying to find a way to restart (respawn) the daemon after it dies, is there a way to do this in the daemon source code?</p>
+<p>Thanks<br />
+Mike</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+
+<div class="indented"><a id="comment-6219"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6219#comment-6219" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6219#comment-6219" class="permalink" rel="bookmark">Respawning a killed Daemon</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6219#comment-6219" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2008-02-23T00:36:32-07:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">Karthik Gopalak... (not verified)</span> on Sat, 02/23/2008 - 00:36</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><span rel="sioc:reply_of" resource="/comment/117#comment-117" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Well. I am not aware of a way of doing this in the Daemon's source code itself. I don't think it is even possible because if you application is dead, there is nothing much it can do to revive itself. :-) What can be done instead is to have an entry for your Daemon in /etc/inittab specifying the "respawn" option. This way, init will take care of respawning your Daemon if it is killed.</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+
+<div class="indented"><a id="comment-6220"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6220#comment-6220" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6220#comment-6220" class="permalink" rel="bookmark">Re: Respawning a killed Daemon</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6220#comment-6220" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2008-02-23T03:14:42-07:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">Karthik Gopalak... (not verified)</span> on Sat, 02/23/2008 - 03:14</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><span rel="sioc:reply_of" resource="/comment/118#comment-118" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>As a partial solution, you can install signal handlers in your daemon to respond to some signals. (SIGTERM maybe). But there is nothing much you can do about SIGKILL. So, /etc/inittab is a complete solution.</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+</div></div></div></div></div><a id="comment-6288"></a>
+<div class="comment comment-by-anonymous clearfix" about="/comment/6288#comment-6288" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6288#comment-6288" class="permalink" rel="bookmark">References to function parameters</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6288#comment-6288" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2009-02-02T12:03:12-07:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">Anonymous (not verified)</span> on Mon, 02/02/2009 - 12:03</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I do not understand the need to reference all the parameters in the function header, is it on intent, or just some sort of concrete and special needs of your particular implementation? Thx. Juraj</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+
+<div class="indented"><a id="comment-6289"></a>
+<div class="comment comment-by-node-author clearfix" about="/comment/6289#comment-6289" typeof="sioc:Post sioct:Comment">
+  
+  
+    <h3 property="dc:title" datatype=""><a href="/comment/6289#comment-6289" class="permalink" rel="bookmark">Passing by const reference</a></h3>
+  
+  <div class="submitted">
+    <a href="/comment/6289#comment-6289" class="permalink" rel="bookmark">Permalink</a>    <span property="dc:date dc:created" content="2009-02-02T12:33:33-07:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/users/jason" typeof="sioc:UserAccount" property="foaf:name" datatype="">jason</span> on Mon, 02/02/2009 - 12:33</span>  </div>
+
+  <div class="content">
+    <span rel="sioc:reply_of" resource="/content/making-linux-daemon" class="rdf-meta"></span><span rel="sioc:reply_of" resource="/comment/193#comment-193" class="rdf-meta"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><div class="geshifilter">
+<div class="cpp geshifilter-cpp" style="font-family:monospace;"><span style="color: #0000ff;">void</span> System<span style="color: #008080;">::</span><span style="color: #007788;">daemonize</span><span style="color: #008000;">(</span><span style="color: #0000ff;">const</span> string <span style="color: #000040;">&amp;</span>dir <span style="color: #000080;">=</span> <span style="color: #FF0000;">"/"</span>,<br />
+               <span style="color: #0000ff;">const</span> std<span style="color: #008080;">::</span><span style="color: #007788;">string</span> <span style="color: #000040;">&amp;</span>stdinfile <span style="color: #000080;">=</span> <span style="color: #FF0000;">"/dev/null"</span>,<br />
+               <span style="color: #0000ff;">const</span> std<span style="color: #008080;">::</span><span style="color: #007788;">string</span> <span style="color: #000040;">&amp;</span>stdoutfile <span style="color: #000080;">=</span> <span style="color: #FF0000;">"/dev/null"</span>,<br />
+               <span style="color: #0000ff;">const</span> std<span style="color: #008080;">::</span><span style="color: #007788;">string</span> <span style="color: #000040;">&amp;</span>stderrfile <span style="color: #000080;">=</span> <span style="color: #FF0000;">"/dev/null"</span><span style="color: #008000;">)</span></div>
+</div>
+<p>I assume you are referring to the function header in the code, referenced above. As this code is intended for C++ usage (but can easily be converted to C) I used the very common "const reference" in C++, which is a normal optimization technique.</p>
+<p>By using the const reference we are getting the performance of passing by reference (as opposed to passing by copy) combined with the guarantee (const) that the user of the function may not modify the parameters.</p>
+<p>This technique is not considered to be "premature optimization," it falls more into the category of "best practices."</p>
+</div></div></div>      </div>
+
+  <ul class="links well well-sm list-inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=node/4284%23comment-form">Log in</a> to post comments</span></li>
+</ul></div>
+</div>
+  </div>
+
+</div>
+
+</section> <!-- /.block -->
+  </div>
+    </section>
+
+    
+  </div>
+</div>
+<footer class="footer container">
+    <div class="region region-footer">
+    <div id="block--managed-1" class="block block--managed">
+
+    
+  <div class="content">
+    <div style='text-align:center'><div class='adsense adsense_managed_' style='display:inline-block;width:728px;height:90px;'>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-1595128002130008";
+/* 728x90 */
+google_ad_slot = "5302735515";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>  </div>
+</div>
+<section id="block-system-powered-by" class="block block-system clearfix">
+
+      
+  <span>Powered by <a href="http://drupal.org">Drupal</a></span>
+</section> <!-- /.block -->
+  </div>
+</footer>
+  <script src="http://blog2.emptycrate.com/sites/default/files/js/js_VU7P4CTgUZdF2SyFko5LLAg9ZK0OSVjXVaAFnTLgVt0.js"></script>
+<script src="http://blog2.emptycrate.com/sites/default/files/js/js_B2uv6dkjoYobfQVyuXdchgrpnnx4oM0TkP_bDVf8Qrg.js"></script>
+</body>
+</html>
