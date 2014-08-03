@@ -19,9 +19,28 @@
 #include <syslog.h>
 #include <string.h>
 
-void do_log(const char * identity, const char * msg);
+//
+// To see the output, type: tail -f /var/log/system.log
+//
+void do_log(const char * identity, const char * msg) {
+    //static int ct = 0;
+    //printf("%s %d\n", msg, ++ ct);
 
-int main(int argc, char * argv[]) {
+    /* Open a connection to the syslog server */
+    openlog(identity,LOG_NOWAIT|LOG_PID,LOG_USER);
+
+    /* Sends a message to the syslog daemon */
+    syslog(LOG_NOTICE, "%s", msg);
+
+    /* this is optional and only needs to be done when your daemon exits */
+    closelog();
+}
+
+
+//
+// Call this function will daemonize the current program.
+//
+void daemonize() {
     /* Our process ID and Session ID */
     pid_t pid, sid;
     
@@ -62,29 +81,28 @@ int main(int argc, char * argv[]) {
     /* Daemon-specific initialization goes here */
     
     /* The Big Loop */
+    /*
     while (1) {
-        /* Do some task here ... */
-        do_log(argv[0], "Daemon is alive");
+        // Do some task here ... 
+        do_log("C Daemon", "I am alive");
        
-        sleep(5); /* wait some time */
+        sleep(5); 
     }
     exit(EXIT_SUCCESS);
+    */
 }
 
 
-//
-// To see the output, type: tail -f /var/log/system.log
-//
-void do_log(const char * identity, const char * msg) {
-    //static int ct = 0;
-    //printf("%s %d\n", msg, ++ ct);
+int main(int argc, char * argv[]) {
+    daemonize(); // daemonize this program.
 
-    /* Open a connection to the syslog server */
-    openlog(identity,LOG_NOWAIT|LOG_PID,LOG_USER); 
- 
-    /* Sends a message to the syslog daemon */
-    syslog(LOG_NOTICE, "%s", msg);
- 
-    /* this is optional and only needs to be done when your daemon exits */
-    closelog();
+    // now do something.
+    while (1) {
+        /* Do some task here ... */
+        do_log(argv[0], "Daemon is alive");
+   
+        sleep(5); /* wait some time */
+    }
+
+    return 0;
 }

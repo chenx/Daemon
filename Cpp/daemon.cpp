@@ -35,6 +35,7 @@ void do_log(const string &identity, const string &msg) {
 }
 
 
+//From: http://blog2.emptycrate.com/content/making-linux-daemon
 //! daemonize the currently running programming
 //! Note: the calls to strerror are not thread safe, but that should not matter
 //! as the application is only just starting up when this function is called
@@ -96,6 +97,11 @@ void daemonize(const string &dir = "/",
     //Unexpected file descriptors
     throw runtime_error("new standard file descriptors were not opened as expected");
   }
+}
+
+
+int main() {
+  daemonize();
 
   while (1) {
     // do something.
@@ -103,11 +109,7 @@ void daemonize(const string &dir = "/",
     do_log("C++ daemon", "I am alive");
     sleep(5);
   }
-}
 
-
-int main() {
-  daemonize();
   return 0;
 }
 
