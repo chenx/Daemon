@@ -93,16 +93,21 @@ void daemonize() {
 }
 
 
-int main(int argc, char * argv[]) {
-    daemonize(); // daemonize this program.
-
-    // now do something.
+//
+// Do whatever task here.
+//
+void do_something(char * identity) {
     while (1) {
         /* Do some task here ... */
-        do_log(argv[0], "Daemon is alive");
-   
+
+        do_log(identity, "Daemon is alive");
         sleep(5); /* wait some time */
     }
+}
 
+
+int main(int argc, char * argv[]) {
+    daemonize(); 
+    do_something(argv[0]);
     return 0;
 }

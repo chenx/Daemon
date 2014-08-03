@@ -15,7 +15,7 @@
 #include <sys/stat.h> // for umask
 #include <fcntl.h>    // for open, O_RDONLY, O_WRONLY, O_CREAT, O_APPEND
 #include <errno.h>    // for errno
-#include <syslog.h>
+#include <syslog.h>   // for openlog, closelog, syslog
 using namespace std;
 
 
@@ -24,13 +24,13 @@ using namespace std;
 //
 //void do_log(const char * identity, const char * msg) {
 void do_log(const string &identity, const string &msg) {
-    /* Open a connection to the syslog server */
+    // Open a connection to the syslog server 
     openlog(identity.c_str(),LOG_NOWAIT|LOG_PID,LOG_USER); 
  
-    /* Sends a message to the syslog daemon */
+    // Sends a message to the syslog daemon 
     syslog(LOG_NOTICE, "%s", msg.c_str());
  
-    /* this is optional and only needs to be done when your daemon exits */
+    // this is optional and only needs to be done when your daemon exits 
     closelog();
 }
 
@@ -100,16 +100,22 @@ void daemonize(const string &dir = "/",
 }
 
 
-int main() {
-  daemonize();
-
+//
+// Do whatever task here.
+//
+void do_something() {
   while (1) {
     // do something.
 
     do_log("C++ daemon", "I am alive");
     sleep(5);
   }
+}
 
+
+int main() {
+  daemonize();
+  do_something();
   return 0;
 }
 
