@@ -1,7 +1,7 @@
 Daemon
 ======
 
-Collection of Unix/Linux daemons and Windows services
+Collection of Unix/Linux daemons and Windows services.
 
 
 Why Daemon?
