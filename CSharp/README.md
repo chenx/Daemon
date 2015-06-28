@@ -20,7 +20,7 @@ Deployment
 - Store csharp_win_svc.exe in a place, say C:\windows, move resources\csharp_win_svc.exe.config there too.  
 - Move recources\test.vbs to C:\\.   
 - Install the windows service:
-  - Open a DOS window, go to where csharp_win_svc.exe is in (C:\windows\ in this example).
+  - Open a DOS window, go to where csharp_win_svc.exe is in (C:\windows in this example).
   - To install, type:  
     InstallUtil /LogToConsole=true csharp_win_svc.exe
 
