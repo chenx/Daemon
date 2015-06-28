@@ -1,7 +1,9 @@
 Daemon
 ======
 
-Collection of Unix/Linux daemons and Windows services.
+Collection of templates for Unix/Linux daemons and Windows services.
+
+You can build more complex daemons and windows services based on these templates.
 
 
 Why Daemon?
