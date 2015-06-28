@@ -18,7 +18,7 @@ Deployment
 ========
 - Open this project in VS2008, compile it into csharp_win_svc.exe.  
 - Store csharp_win_svc.exe in a place, say C:\windows, move resources\csharp_win_svc.exe.config there too.  
-- Move recourses\test.vbs to C:\\.   
+- Move recources\test.vbs to C:\\.   
 - Install the windows service:
   - To install, type this in DOS window:  
     InstallUtil /LogToConsole=true csharp_win_svc.exe
