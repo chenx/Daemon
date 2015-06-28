@@ -20,14 +20,15 @@ Deployment
 - Store csharp_win_svc.exe in a place, say C:\windows, move resources\csharp_win_svc.exe.config there too.  
 - Move recources\test.vbs to C:\\.   
 - Install the windows service:
-  - To install, type this in DOS window:  
+  - Open a DOS window, go to where csharp_win_svc.exe is in (C:\windows\ in this example).
+  - To install, type:  
     InstallUtil /LogToConsole=true csharp_win_svc.exe
 
     You will be prompted for an account name/password by which the windows services will be run as.  
     If it is a local user account, it should start with ".\", e.g., ".\Administrator".   
     If it is a domain user, it should start with the domain name:  "[domain name]\username".  
 
-  - To uninstall, type this in DOS window:  
+  - To uninstall, type:  
     InstallUtil /LogToConsole=true /u csharp_win_svc.exe
 
 
