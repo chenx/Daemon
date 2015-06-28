@@ -8,8 +8,9 @@ This is a windows service written in C#.
 Functions
 ==========
 It does two things:
-1) In every 5 seconds, write a message to windows event log.
-2) Listen on port 9090, if contacted by a TCP client, invoke a local vbscript to display a dialog box.
+
+1) In every 5 seconds, write a message to windows event log.   
+2) Listen on port 9090, if contacted by a TCP client, invoke a local vbscript to display a dialog box.   
    
 This can be used as a template for more complex functions.
 
