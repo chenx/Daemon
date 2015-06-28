@@ -18,17 +18,17 @@ Deployment
 ========
 - Open this project in VS2008, compile it into csharp_win_svc.exe.
 - Store csharp_win_svc.exe in a place, say C:\windows, move resources\csharp_win_svc.exe.config there too.
-- Move recourses\test.vbs to C:\.
+- Move recourses\test.vbs to C:\
 - Install the windows service:
-  - To install:  
-    InstallUtil /LogToConsole=true wsPanSTARRS_ScriptInvoker.exe
+  - To install, type this in DOS window:  
+    InstallUtil /LogToConsole=true csharp_win_svc.exe
 
     You will be prompted for an account name/password by which the windows services will be run as.  
     If it is a local user account, it should start with ".\", e.g., ".\Administrator".   
     If it is a domain user, it should start with the domain name:  "[domain name]\username".  
 
-  - To uninstall:  
-    InstallUtil /LogToConsole=true /u wsPanSTARRS_ScriptInvoker.exe
+  - To uninstall, type this in DOS window:  
+    InstallUtil /LogToConsole=true /u csharp_win_svc.exe
 
 
 License
