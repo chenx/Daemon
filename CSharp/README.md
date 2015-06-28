@@ -16,9 +16,9 @@ This can be used as a template for more complex functions.
 
 Deployment
 ========
-- Open this project in VS2008, compile it into csharp_win_svc.exe.
-- Store csharp_win_svc.exe in a place, say C:\windows, move resources\csharp_win_svc.exe.config there too.
-- Move recourses\test.vbs to C:\
+- Open this project in VS2008, compile it into csharp_win_svc.exe.  
+- Store csharp_win_svc.exe in a place, say C:\windows, move resources\csharp_win_svc.exe.config there too.  
+- Move recourses\test.vbs to C:\\.   
 - Install the windows service:
   - To install, type this in DOS window:  
     InstallUtil /LogToConsole=true csharp_win_svc.exe
