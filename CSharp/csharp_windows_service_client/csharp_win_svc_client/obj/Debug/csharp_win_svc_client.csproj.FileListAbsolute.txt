@@ -1,6 +1,0 @@
-C:\Users\Administrator\Documents\Visual Studio 2008\Projects\csharp_win_svc_client\csharp_win_svc_client\bin\Debug\csharp_win_svc_client.exe
-C:\Users\Administrator\Documents\Visual Studio 2008\Projects\csharp_win_svc_client\csharp_win_svc_client\bin\Debug\csharp_win_svc_client.pdb
-C:\Users\Administrator\Documents\Visual Studio 2008\Projects\csharp_win_svc_client\csharp_win_svc_client\bin\Debug\csharp_win_svc.exe
-C:\Users\Administrator\Documents\Visual Studio 2008\Projects\csharp_win_svc_client\csharp_win_svc_client\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Administrator\Documents\Visual Studio 2008\Projects\csharp_win_svc_client\csharp_win_svc_client\obj\Debug\csharp_win_svc_client.exe
-C:\Users\Administrator\Documents\Visual Studio 2008\Projects\csharp_win_svc_client\csharp_win_svc_client\obj\Debug\csharp_win_svc_client.pdb
