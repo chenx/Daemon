@@ -1,0 +1,80 @@
+7/2/2015 6:10:43 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:10:45 PM: please wait for result..
+7/2/2015 6:12:50 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:13:20 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:14:39 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:15:53 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:18:24 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:19:11 PM: Connecting to tcp://localhost:9090/Listener
+7/2/2015 6:21:00 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:21:47 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:21:50 PM: Error: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+7/2/2015 6:21:50 PM: End for server: localhost:9090
+7/2/2015 6:21:50 PM: 
+7/2/2015 6:23:27 PM: Connecting to tcp://localhost:9090/csharp_win_svc
+7/2/2015 6:23:30 PM: Error: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+7/2/2015 6:23:30 PM: End for server: localhost:9090
+7/2/2015 6:23:30 PM: 
+7/2/2015 6:26:13 PM: Connecting to tcp://localhost:9091/csharp_win_svc
+7/2/2015 6:26:14 PM: please wait for result..
+7/2/2015 6:26:14 PM: Microsoft (R) Windows Script Host Version 5.8
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+This will go to standard output.
+
+7/2/2015 6:26:14 PM: End for server: localhost:9091
+7/2/2015 6:26:14 PM: 
+7/2/2015 6:26:21 PM: Connecting to tcp://localhost:9091/csharp_win_svc
+7/2/2015 6:26:22 PM: please wait for result..
+7/2/2015 6:26:22 PM: Microsoft (R) Windows Script Host Version 5.8
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+This will go to standard output.
+
+7/2/2015 6:26:22 PM: End for server: localhost:9091
+7/2/2015 6:26:22 PM: 
+7/2/2015 6:26:34 PM: Connecting to tcp://localhost:9091/csharp_win_svc
+7/2/2015 6:26:35 PM: please wait for result..
+7/2/2015 6:26:36 PM: Error: The read operation failed, see inner exception.
+7/2/2015 6:26:36 PM: End for server: localhost:9091
+7/2/2015 6:26:36 PM: 
+7/2/2015 6:26:46 PM: Connecting to tcp://localhost:9091/csharp_win_svc
+7/2/2015 6:26:47 PM: please wait for result..
+7/2/2015 6:26:47 PM: Microsoft (R) Windows Script Host Version 5.8
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+This will go to standard output.
+
+7/2/2015 6:26:47 PM: End for server: localhost:9091
+7/2/2015 6:26:47 PM: 
+7/2/2015 6:27:09 PM: Connecting to tcp://localhost:9091/csharp_win_svc
+7/2/2015 6:27:10 PM: please wait for result..
+7/2/2015 6:27:10 PM: Microsoft (R) Windows Script Host Version 5.8
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+This will go to standard output.
+
+7/2/2015 6:27:10 PM: End for server: localhost:9091
+7/2/2015 6:27:10 PM: 
+7/2/2015 6:45:59 PM: Connecting to tcp://localhost:9091/csharp_win_svc
+7/2/2015 6:46:02 PM: Error: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+7/2/2015 6:46:02 PM: End for server: localhost:9091
+7/2/2015 6:46:02 PM: 
+7/2/2015 6:46:26 PM: Connecting to tcp://localhost:9092/csharp_win_svc
+7/2/2015 6:46:27 PM: please wait for result..
+7/2/2015 6:46:27 PM: Microsoft (R) Windows Script Host Version 5.8
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+This will go to standard output.
+
+7/2/2015 6:46:27 PM: End for server: localhost:9092
+7/2/2015 6:46:27 PM: 
+7/2/2015 6:48:54 PM: Connecting to tcp://localhost:9092/csharp_win_svc
+7/2/2015 6:48:55 PM: please wait for result..
+7/2/2015 6:48:55 PM: Microsoft (R) Windows Script Host Version 5.8
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+This will go to standard output.
+
+7/2/2015 6:48:55 PM: End for server: localhost:9092
+7/2/2015 6:48:55 PM: 
