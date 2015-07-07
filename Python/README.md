@@ -1,7 +1,7 @@
 Python 2.x
 =====
 
-Daemon.py is a simple unix/linux daemon in Python 2.x.
+Daemon.py is a simple unix/linux daemon class in Python 2.x. DaemonInstance.py demonstrates how to use it.
 
 The code is from: <a href="http://www.jejik.com/articles/2007/02/a_simple_unix_linux_daemon_in_python/">http://www.jejik.com/articles/2007/02/a_simple_unix_linux_daemon_in_python/</a>
 
