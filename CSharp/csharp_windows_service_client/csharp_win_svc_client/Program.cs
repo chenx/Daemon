@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Collections;
@@ -124,18 +124,30 @@ namespace csharp_win_svc_client
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// Get name of this executable.
+        /// </summary>
+        /// <returns></returns>
         private static string getAppName() {
             string name = System.Reflection.Assembly.GetExecutingAssembly().GetName().ToString();
             name = name.Split(new char[] { ',' })[0];
             return name;
         }
 
+        /// <summary>
+        /// Output to DOS stdout.
+        /// </summary>
+        /// <param name="s"></param>
         private static void doOutput(string s)
         {
             Console.WriteLine(s);
             if (useLog) { File.AppendAllText(logFile, DateTime.Now + ": " + s + "\r\n"); }
         }
 
+        /// <summary>
+        /// Program entry point.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             if (!getOpt(args)) return;

@@ -51,12 +51,12 @@ namespace csharp_win_svc
             string output = "";
             try
             {
-                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(_cmd);
-                psi.Arguments = _arg;
-                psi.RedirectStandardOutput = true;
-                psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; 
-                psi.UseShellExecute = false;
-                System.Diagnostics.Process proc = System.Diagnostics.Process.Start(psi);
+                System.Diagnostics.ProcessStartInfo cmd = new System.Diagnostics.ProcessStartInfo(_cmd);
+                cmd.Arguments = _arg;
+                cmd.RedirectStandardOutput = true;
+                cmd.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                cmd.UseShellExecute = false;
+                System.Diagnostics.Process proc = System.Diagnostics.Process.Start(cmd);
                 System.IO.StreamReader myOutput = proc.StandardOutput;
                 output = myOutput.ReadToEnd();
                 proc.WaitForExit();
